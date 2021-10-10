@@ -1,19 +1,25 @@
-import { makeExecutableSchema } from "@graphql-tools/schema"
-import { IResolvers } from "@graphql-tools/utils"
 import { ApolloServerPluginDrainHttpServer } from "apollo-server-core"
 import { ApolloServer } from "apollo-server-express"
 import express from "express"
-import { DocumentNode, execute, subscribe } from "graphql"
+import { execute, subscribe } from "graphql"
 import http from "http"
 import { SubscriptionServer } from "subscriptions-transport-ws"
+import { schema } from "./schema"
 
-export async function startApolloServer(
-  typeDefs: DocumentNode,
-  resolvers: IResolvers
-) {
+export async function startApolloServer() {
   const app = express()
   const httpServer = http.createServer(app)
-  const schema = makeExecutableSchema({ typeDefs, resolvers })
+  const subscriptionServer = SubscriptionServer.create(
+    {
+      schema,
+      execute,
+      subscribe,
+    },
+    {
+      server: httpServer,
+      path: "/subscriptions",
+    }
+  )
   const server = new ApolloServer({
     schema,
     plugins: [
@@ -29,17 +35,6 @@ export async function startApolloServer(
       },
     ],
   })
-  const subscriptionServer = SubscriptionServer.create(
-    {
-      schema,
-      execute,
-      subscribe,
-    },
-    {
-      server: httpServer,
-      path: "/subscriptions",
-    }
-  )
 
   await server.start()
   server.applyMiddleware({
