@@ -1,9 +1,13 @@
 import { useMutation } from "@apollo/client"
 import { useState } from "react"
 import gql from "graphql-tag"
+import {
+  PushNotificationMutation,
+  PushNotificationMutationVariables,
+} from "./PushNotification.types"
 
-const POST_MUTATION = gql`
-  mutation PushNotificationMutation($label: String!) {
+const PUSH_NOTIFICATION = gql`
+  mutation PushNotification($label: String!) {
     pushNotification(label: $label) {
       label
     }
@@ -11,7 +15,10 @@ const POST_MUTATION = gql`
 `
 
 export const PushNotification = () => {
-  const [pushNotificationMutation] = useMutation(POST_MUTATION)
+  const [pushNotificationMutation] = useMutation<
+    PushNotificationMutation,
+    PushNotificationMutationVariables
+  >(PUSH_NOTIFICATION)
   const [notification, setNotification] = useState({ label: "" })
 
   const pushNotification = async () => {

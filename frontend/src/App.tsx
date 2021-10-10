@@ -5,9 +5,10 @@ import "react-toastify/dist/ReactToastify.css"
 
 import "./App.css"
 import { PushNotification } from "./components/PushNotification/PushNotification"
+import { NewNotificationSubscription } from "./App.types"
 
 const NEW_NOTIFICATION_SUBSCRIPTION = gql`
-  subscription Notification {
+  subscription NewNotification {
     newNotification {
       label
     }
@@ -15,7 +16,9 @@ const NEW_NOTIFICATION_SUBSCRIPTION = gql`
 `
 
 function App() {
-  const { data, loading } = useSubscription(NEW_NOTIFICATION_SUBSCRIPTION, {})
+  const { data, loading } = useSubscription<NewNotificationSubscription>(
+    NEW_NOTIFICATION_SUBSCRIPTION
+  )
 
   useEffect(() => {
     toast(data?.newNotification?.label)
