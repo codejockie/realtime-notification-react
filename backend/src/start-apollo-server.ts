@@ -37,7 +37,7 @@ export async function startApolloServer(
     },
     {
       server: httpServer,
-      path: server.graphqlPath,
+      path: "/subscriptions",
     }
   )
 
