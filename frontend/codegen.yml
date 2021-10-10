@@ -1,4 +1,4 @@
-# overwrite: true
+overwrite: true
 schema: "http://localhost:5000/graphql"
 generates:
   src/types.ts:
@@ -16,7 +16,6 @@ generates:
       namingConvention: keep
     plugins:
       - typescript-operations
-      - typescript-document-nodes
   src/plugins/introspection.ts:
     plugins:
       - fragment-matcher
