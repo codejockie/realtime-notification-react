@@ -1,10 +1,10 @@
 {
   "name": "real-time-notification",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec ts-node ."
+    "dev": "nodemon --exec ts-node ./src"
   },
   "dependencies": {
     "@graphql-tools/schema": "^8.2.0",
