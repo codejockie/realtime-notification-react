@@ -1,0 +1,24 @@
+# overwrite: true
+schema: "http://localhost:5000/graphql"
+generates:
+  src/types.ts:
+    config:
+      namingConvention: keep
+    plugins:
+      - typescript
+  src/:
+    documents: "src/**/!(*.d|*.spec).{ts,tsx}"
+    preset: near-operation-file
+    presetConfig:
+      extension: .types.ts
+      baseTypesPath: types.ts
+    config:
+      namingConvention: keep
+    plugins:
+      - typescript-operations
+      - typescript-document-nodes
+  src/plugins/introspection.ts:
+    plugins:
+      - fragment-matcher
+    config:
+      apolloClientVersion: 2

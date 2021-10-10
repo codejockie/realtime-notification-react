@@ -7,7 +7,7 @@ import "./App.css"
 import { PushNotification } from "./components/PushNotification/PushNotification"
 
 const NEW_NOTIFICATION_SUBSCRIPTION = gql`
-  subscription {
+  subscription Notification {
     newNotification {
       label
     }
